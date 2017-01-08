@@ -1,21 +1,9 @@
-/*        translate([- houseDepth/2,houseDepth/2]) //треугольник крыши
-            rotate([0,0,315])
-                union() {
-                    polygon([[0,0],[houseDepth/sqrt(2),0],[0,houseDepth/sqrt(2)]]);
-                    translate ([houseDepth/sqrt(2) * 0.2, - wF]) square([pazWidth * 2, wF]);
-                    translate ([houseDepth/sqrt(2) * 0.6, - wF]) square([pazWidth * 2, wF]);
-                    
-                    translate ([-wF, houseDepth/sqrt(2) * 0.2]) square([wF, pazWidth * 2]);
-                    translate ([-wF, houseDepth/sqrt(2) * 0.6]) square([wF, pazWidth * 2]);
-                }
-        
-*/
 wF = 8;
 pazWidth = 10;
 
 
-hW = 600; //желательная ширина дома
-hD = 300; //желательная глубина дома
+hW = 500; //желательная ширина дома
+hD = 150; //желательная глубина дома
 hH = 900; //желательная высота стены дома
 
 roofAddW = 15; //вылет крыши по ширине
@@ -78,6 +66,14 @@ union() { //стены и основание дома
             for( i = [0 : pazWidth * 2 : wallHeight - pazWidth - wF]) //соединение с задником
                 translate([i, 0]) square([pazWidth, wF+1]);
         }
+        union() {// отверстия для шипов второго этажа
+            translate( [wallHeight - secondFloorH, houseDepth * 0.33]) square([wF, pazWidth * 2]);
+            translate( [wallHeight - secondFloorH, houseDepth * 0.66]) square([wF, pazWidth * 2]);
+        }
+        union() {// отверстия для шипов третьего этажа
+            translate( [wallHeight - thirdFloorH, houseDepth * 0.33]) square([wF, pazWidth * 2]);
+            translate( [wallHeight - thirdFloorH, houseDepth * 0.66]) square([wF, pazWidth * 2]);
+        }
     }
     
     translate([houseWidth + wallHeight*2 +2, 0])
@@ -105,6 +101,14 @@ union() { //стены и основание дома
             for( i = [0 : pazWidth * 2 : wallHeight - pazWidth - wF]) //соединение с задником
                 translate([i, 0]) square([pazWidth, wF+1]);
         }
+        union() {// отверстия для шипов второго этажа
+            translate( [wallHeight - secondFloorH, houseDepth * 0.33]) square([wF, pazWidth * 2]);
+            translate( [wallHeight - secondFloorH, houseDepth * 0.66]) square([wF, pazWidth * 2]);
+        }
+        union() {// отверстия для шипов третьего этажа
+            translate( [wallHeight - thirdFloorH, houseDepth * 0.33]) square([wF, pazWidth * 2]);
+            translate( [wallHeight - thirdFloorH, houseDepth * 0.66]) square([wF, pazWidth * 2]);
+        }
     }
 
     translate ([wallHeight + 1, -wallHeight -1]) //temp
@@ -128,6 +132,16 @@ union() { //стены и основание дома
                     translate([0, i]) square([wF, pazWidth]);
                 translate([0, wallHeight - wF]) square([wF,wF]); //удаляем квадратик в углу, где сходятся все стенки
             }
+            
+            // отверстия под шипы второго этажа
+            translate( [houseWidth * 0.25, wallHeight - secondFloorH]) square([pazWidth * 2, wF]);
+            translate( [houseWidth * 0.5, wallHeight - secondFloorH]) square([pazWidth * 2, wF]);
+            translate( [houseWidth * 0.75, wallHeight - secondFloorH]) square([pazWidth * 2, wF]);
+            
+            // отверстия под шипы третьего этажа
+            translate( [houseWidth * 0.25, wallHeight - thirdFloorH]) square([pazWidth * 2, wF]);
+            translate( [houseWidth * 0.5, wallHeight - thirdFloorH]) square([pazWidth * 2, wF]);
+            translate( [houseWidth * 0.75, wallHeight - thirdFloorH]) square([pazWidth * 2, wF]);
             
             
         }
@@ -167,7 +181,7 @@ union() { //стены и основание дома
         }
     }
     
-     translate([ wallHeight, houseDepth + 1]) { //пол второго этажа
+    translate([ wallHeight, houseDepth + 1]) { //пол второго этажа
         //square([houseDepth/sqrt(2) + roofAddD, houseWidth + 2 * roofAddW]);
         difference() {        
             union() {
@@ -189,6 +203,28 @@ union() { //стены и основание дома
             }
         }
     }
+    translate([ wallHeight, 2 * houseDepth + 2]) { //пол третьего этажа
+        //square([houseDepth/sqrt(2) + roofAddD, houseWidth + 2 * roofAddW]);
+        difference() {        
+            union() {
+                translate( [wF, wF]) square([houseWidth - 2 * wF , houseDepth - wF],false);
+                translate( [houseWidth * 0.25, 0]) square([pazWidth * 2, wF]);
+                translate( [houseWidth * 0.5, 0]) square([pazWidth * 2, wF]);
+                translate( [houseWidth * 0.75, 0]) square([pazWidth * 2, wF]);
+                
+                translate( [0, houseDepth * 0.33]) square([wF, pazWidth * 2]);
+                translate( [0, houseDepth * 0.66]) square([wF, pazWidth * 2]);
+                
+                translate( [houseWidth - wF, houseDepth * 0.33]) square([wF, pazWidth * 2]);
+                translate( [houseWidth - wF, houseDepth * 0.66]) square([wF, pazWidth * 2]);
+            }
+            
+            union() {
+
+                
+            }
+        }
+    }    
     
 
 
