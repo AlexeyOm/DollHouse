@@ -69,10 +69,10 @@ color("green")
 translate([houseWidth + 10, 0])
 difference() {
     union(){
-        square([houseHeight, houseDepth], false);
         translate([houseHeight + houseDepth/2,houseDepth/2]) //треугольник крыши
             rotate([0,0,135])
                 polygon([[0,0],[houseDepth/sqrt(2),0],[0,houseDepth/sqrt(2)]]);
+        square([houseHeight, houseDepth], false);
     }
     
     
@@ -98,4 +98,26 @@ difference() {
     }
     
 }
+
+//задняя стенка
+translate([0, -houseHeight - 5])
+difference(){
+    union() { //прямоугольник стенки
+        square([houseWidth, houseHeight]);
+    }
+    union() { //гребни
+            
+        translate([0,houseDepth-1]) square([wF, 2]);
+        for(step=[wPaz : wPaz*2 : houseDepth]) {
+            translate([0-1,step]) square([wF+1, wPaz], false);
+        
+        }
+        translate([0,houseHeight-wF])
+        for(paz=[wF + wPaz : 20 : houseHeight - wPaz]) {
+            translate([paz,0]) square([wF+1, wPaz], false);
+            }
+    }
+    
+}
+
 
